@@ -55,10 +55,12 @@ if __name__ == "__main__":
     height = media_info["video"]["height"],
     frame_rate = media_info["video"]["frame_rate"],
     bitrate_mode = "vbr",
+    # use original video bitrate if get_recommended_bitrate() returns None
+    # original video bitrate shouldn't be greater than 1000001
     bitrate_kb = get_recommended_bitrate(
       frame_rate = media_info["video"]["frame_rate"],
       resolution = media_info["video"]["height"]
-    )
+    ) or min(media_info["video"]["bitrate"], 1000001)
   )
 
   output_object = Output(
