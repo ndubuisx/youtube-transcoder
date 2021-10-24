@@ -2,7 +2,7 @@ import json
 from media_api import MediaAPI
 from transcode_request_body import Input, Output, Audio, Video, TranscodeRequestBody
 
-# returns the recommended video bitrates for SDR uploads given the video's frame rate and resolution
+# returns the recommended video bitrate for SDR uploads given the video's frame rate and resolution
 def get_recommended_bitrate(frame_rate: int, resolution: int):
   is_standard_frame_rate = frame_rate <= 30 and frame_rate >= 24
   is_high_frame_rate = frame_rate <= 60 and frame_rate >= 30
@@ -41,8 +41,6 @@ if __name__ == "__main__":
   media_api = MediaAPI()
   media_info = media_api.diagnose(file_path, dolby_input_url)
 
-  input_object = Input(dolby_input_url)
-
   audio_object = Audio(
     codec = "aac_lc",
     bitrate_kb = 384,
@@ -62,7 +60,9 @@ if __name__ == "__main__":
       resolution = media_info["video"]["height"]
     ) or min(media_info["video"]["bitrate"], 1000001)
   )
-
+  
+  input_object = Input(dolby_input_url)
+  
   output_object = Output(
     destination = transcoded_media_url,
     kind = "mp4",
