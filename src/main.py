@@ -76,7 +76,7 @@ if __name__ == "__main__":
   )
 
   transcode_request_body = json.loads(
-    json.dumps(transcode_request_body, default=lambda o: o.__dict__, indent=4)
+    json.dumps(transcode_request_body, default=lambda o: o.__dict__)
   )
   
   media_api.transcode(
